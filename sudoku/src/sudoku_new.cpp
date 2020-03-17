@@ -17,12 +17,12 @@ int main()
 		{0,0,0,0,0,1,0,0,2},
 		{3,0,0,4,0,0,0,0,8},
 		{9,5,8,6,0,0,0,1,4}};
-	vector<int> options;
+	vector<vector<int> > options;
 
 	for(size_t row = 0; row < puzzle.size(); row++){
 		for(size_t col = 0; col < puzzle.at(0).size(); col++){
 			cout << puzzle.at(row).at(col) << endl;
-			options = possible(row, col, &puzzle);
+			options.at(row) = possible(row, col, &puzzle);
 			printOptions(&options);
 		}
 	}
