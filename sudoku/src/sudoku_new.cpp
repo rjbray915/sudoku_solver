@@ -5,27 +5,39 @@ using namespace std;
 //prototypes
 vector<int> possible(size_t r, size_t c, vector<vector<int> > *puzzle);
 void printOptions(vector<int> *options);
+void assessBlock(int row, int col, vector<vector<int> > *puzzle);
 
 int main()
 {
-	vector<vector<int> > puzzle{{1,3,0,0,0,5,7,8,6},
-		{2,0,0,0,0,4,0,0,5},
-		{8,0,0,3,0,0,0,0,0},
-		{6,8,0,0,0,0,5,0,0},
-		{0,0,0,0,2,0,0,0,0},
-		{0,0,7,0,0,0,0,9,1},
-		{0,0,0,0,0,1,0,0,2},
-		{3,0,0,4,0,0,0,0,8},
-		{9,5,8,6,0,0,0,1,4}};
-	vector<vector<int> > options;
+	vector<vector<int> > puzzle{{7,0,0,1,0,0,0,3,8},
+								{0,0,0,7,0,0,0,2,0},
+								{0,2,4,0,0,0,0,0,9},
+								{0,0,0,5,3,0,0,1,6},
+								{0,0,0,0,7,0,0,0,0},
+								{8,1,0,0,0,0,0,0,0},
+								{9,8,0,0,0,4,2,0,0},
+								{0,0,3,0,2,0,0,7,0},
+								{0,0,0,0,0,0,0,0,0}};
+	size_t i, j;
+	
+	size_t c = 0;
+	while(c < 10000){
+		for(i = 0; i < puzzle.size(); i += 3){
+			for(j = 0; j < puzzle.at(0).size(); j += 3){
+				assessBlock(i, j, &puzzle);
+			}
+		}
+
+		c++;
+	}
 
 	for(size_t row = 0; row < puzzle.size(); row++){
-		for(size_t col = 0; col < puzzle.at(0).size(); col++){
-			cout << puzzle.at(row).at(col) << endl;
-			options.at(row) = possible(row, col, &puzzle);
-			printOptions(&options);
+			for(size_t col = 0; col < puzzle.at(0).size(); col++){
+				cout << puzzle.at(row).at(col) << " ";
+			}
+			cout << "\n";
 		}
-	}
+	cout << "\n";
 }
 
 vector<int> possible(size_t r, size_t c, vector<vector <int> > *puzzle){
@@ -81,6 +93,74 @@ vector<int> possible(size_t r, size_t c, vector<vector <int> > *puzzle){
 
 
 	return options;
+}
+
+void assessBlock(int row, int col, vector<vector<int> > *puzzle){
+	size_t i, j, k, countOption;
+	vector<vector<int> > options, indexes;
+	int chosenOpt;
+
+	for(i = row; i < row+3; i++){
+		for(j = col; j < col+3; j++){
+			if(puzzle->at(i).at(j) == 0){
+				options.push_back(possible(i, j, puzzle));
+				indexes.push_back({i, j});
+			}
+
+		}
+	}
+
+	for(i = 0; i < options.size(); i++){
+		
+		//figure out if only one option is possible
+		countOption = 0;
+		for(j = 0; j < options.at(i).size(); j++){
+			if(options.at(i).at(j) != 0){
+				///*dlt*/cout << "only one " << options[i][j] << endl;
+				chosenOpt = options.at(i).at(j);
+				countOption++;
+			}
+		}
+
+		if(countOption > 1){
+			for(j = 0; j < options.at(0).size(); j++){
+
+				if(options.at(i).at(j) != 0){
+					k = i+1;
+					countOption = 0;
+
+					///*dlt*/ cout << "new option" << endl;
+
+					while(k % options.size() != i){
+						///*dlt*/cout << options.at(i).at(j) << " " << options.at(k%options.size()).at(j) << endl;
+
+						if(options.at(k % options.size()).at(j) != 0){
+							countOption++;
+							break;
+						}
+
+						k++;
+					}
+				
+					//no other has that option
+					if(countOption == 0){
+						///*dlt*/cout << "chosen" << options.at(i).at(j) << endl;
+						size_t optionI = indexes.at(i).at(0);
+						size_t optionJ = indexes.at(i).at(1);
+						puzzle->at(optionI).at(optionJ) = options.at(i).at(j);
+					}
+				}
+			}
+		}
+		else{
+			///*dlt*/ cout << "one option\n";
+
+			size_t optionI = indexes.at(i).at(0);
+			size_t optionJ = indexes.at(i).at(1);
+			puzzle->at(optionI).at(optionJ) = chosenOpt;
+		}
+	}
+
 }
 
 void printOptions(vector<int> *options){
