@@ -16,11 +16,13 @@ using namespace std;
 vector<int> possible(size_t r, size_t c, vector<vector<int> > *puzzle);
 void updatePossible(size_t i, size_t j, vector<vector<int> > *puzzle, vector<vector<vector<int> > > *possibilities, int possibility);
 void printOptions(vector<int> *options);
+void assessBlock(int row, int col, vector<vector<int> > *puzzle);
 
 bool pairEliminateRow(int rowCheck, int colCheck, vector<vector<int> > *puzzle, vector<vector<vector<int> > > *possibilities, bool &modified);
 
 int main()
 {
+<<<<<<< HEAD
 	vector<vector<int> > puzzle{{4,0,0,0,0,0,9,3,8},
 								{0,3,2,0,9,4,1,0,0},
 								{0,9,5,3,0,0,2,4,0},
@@ -101,6 +103,29 @@ int main()
 				}
 			}
 		}
+=======
+	vector<vector<int> > puzzle{{7,0,0,1,0,0,0,3,8},
+								{0,0,0,7,0,0,0,2,0},
+								{0,2,4,0,0,0,0,0,9},
+								{0,0,0,5,3,0,0,1,6},
+								{0,0,0,0,7,0,0,0,0},
+								{8,1,0,0,0,0,0,0,0},
+								{9,8,0,0,0,4,2,0,0},
+								{0,0,3,0,2,0,0,7,0},
+								{0,0,0,0,0,0,0,0,0}};
+	size_t i, j;
+	
+	size_t c = 0;
+	while(c < 10000){
+		for(i = 0; i < puzzle.size(); i += 3){
+			for(j = 0; j < puzzle.at(0).size(); j += 3){
+				assessBlock(i, j, &puzzle);
+			}
+		}
+
+		c++;
+	}
+>>>>>>> 3a72948a42e361dbd57704300ed16a8a8bea145a
 
 		c++;
 	} while(c < 1/*modified*/);
@@ -111,6 +136,7 @@ int main()
 				cout << puzzle.at(row).at(col) << " ";
 			}
 			cout << "\n";
+<<<<<<< HEAD
 		}
 	cout << "\n";
 
@@ -121,8 +147,10 @@ int main()
 		for(j = 0; j < possibilities.at(0).size(); j++){
 			printf("row:%u col:%u\n", i, j);
 			printOptions(&possibilities.at(i).at(j));
+=======
+>>>>>>> 3a72948a42e361dbd57704300ed16a8a8bea145a
 		}
-	}
+	cout << "\n";
 }
 
 vector<int> possible(size_t r, size_t c, vector<vector <int> > *puzzle){
@@ -180,6 +208,7 @@ vector<int> possible(size_t r, size_t c, vector<vector <int> > *puzzle){
 	return options;
 }
 
+<<<<<<< HEAD
 void updatePossible(size_t row, size_t col, vector<vector<int> > *puzzle, vector<vector<vector<int> > > *possibilities, int possibility){
 	size_t i, j, blockRow, blockCol;
 
@@ -873,6 +902,76 @@ bool pairEliminateRow(int rowCheck, int colCheck, vector<vector<int> > *puzzle, 
 }
 
 
+=======
+void assessBlock(int row, int col, vector<vector<int> > *puzzle){
+	size_t i, j, k, countOption;
+	vector<vector<int> > options, indexes;
+	int chosenOpt;
+
+	for(i = row; i < row+3; i++){
+		for(j = col; j < col+3; j++){
+			if(puzzle->at(i).at(j) == 0){
+				options.push_back(possible(i, j, puzzle));
+				indexes.push_back({i, j});
+			}
+
+		}
+	}
+
+	for(i = 0; i < options.size(); i++){
+		
+		//figure out if only one option is possible
+		countOption = 0;
+		for(j = 0; j < options.at(i).size(); j++){
+			if(options.at(i).at(j) != 0){
+				///*dlt*/cout << "only one " << options[i][j] << endl;
+				chosenOpt = options.at(i).at(j);
+				countOption++;
+			}
+		}
+
+		if(countOption > 1){
+			for(j = 0; j < options.at(0).size(); j++){
+
+				if(options.at(i).at(j) != 0){
+					k = i+1;
+					countOption = 0;
+
+					///*dlt*/ cout << "new option" << endl;
+
+					while(k % options.size() != i){
+						///*dlt*/cout << options.at(i).at(j) << " " << options.at(k%options.size()).at(j) << endl;
+
+						if(options.at(k % options.size()).at(j) != 0){
+							countOption++;
+							break;
+						}
+
+						k++;
+					}
+				
+					//no other has that option
+					if(countOption == 0){
+						///*dlt*/cout << "chosen" << options.at(i).at(j) << endl;
+						size_t optionI = indexes.at(i).at(0);
+						size_t optionJ = indexes.at(i).at(1);
+						puzzle->at(optionI).at(optionJ) = options.at(i).at(j);
+					}
+				}
+			}
+		}
+		else{
+			///*dlt*/ cout << "one option\n";
+
+			size_t optionI = indexes.at(i).at(0);
+			size_t optionJ = indexes.at(i).at(1);
+			puzzle->at(optionI).at(optionJ) = chosenOpt;
+		}
+	}
+
+}
+
+>>>>>>> 3a72948a42e361dbd57704300ed16a8a8bea145a
 void printOptions(vector<int> *options){
 	printf("{");
 	for(size_t c = 0; c < options->size(); c++){
