@@ -1,5 +1,6 @@
-#include <iostream>
+#pragma once
 #include <vector>
+using namespace std;
 
 bool oneOption(size_t i, size_t j, vector<vector<int> > *puzzle, vector<vector<vector<int> > > *possibilities, bool &modified);
 bool assessBlock(int row, int col, vector<vector<int> > *puzzle, vector<vector<vector<int> > > *possibilities, bool &modified);
