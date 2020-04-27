@@ -35,11 +35,14 @@ int main()
 
 **********************************************/
 	try{
-		Puzzle( (string)("../textPuzzles/test1.txt") );
+		Puzzle( (string)("textPuzzles/test1.txt") );
 	} catch(string s){
 		printf("%s\n", s.c_str() );
+		return -1;
 	}
 
+	//return for now
+	return 0;
 
 				vector<vector<int> > puzzle{{4,0,0,0,0,0,9,3,8},
 								{0,3,2,0,9,4,1,0,0},

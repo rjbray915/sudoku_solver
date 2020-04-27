@@ -13,3 +13,8 @@ obj/Puzzle.o: include/Puzzle.h include/Cell.h src/Puzzle.cpp src/Cell.cpp
 
 obj/sudoku_solver.o: src/sudoku_solver.cpp
 	g++ $(CXXFLAGS) -c -o obj/sudoku_solver.o src/sudoku_solver.cpp
+
+#clean slate
+clean:
+	rm bin/*
+	rm obj/*
