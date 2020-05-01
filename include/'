@@ -1,0 +1,9 @@
+#pragma once
+#include "../include/Cell.h"
+
+class Puzzle{
+
+	protected:
+    	vector<vector<Cell> > puzzle;
+}
+
