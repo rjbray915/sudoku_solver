@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <cstdio>
 using namespace std;
 
 class Cell{
@@ -8,7 +9,7 @@ class Cell{
 		Cell& operator=(Cell& c);
 		
 		//cell utility
-
+		void printOptions();
 	protected:
 		int num;
 		size_t row, col;

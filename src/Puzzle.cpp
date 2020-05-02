@@ -56,7 +56,7 @@ Puzzle& Puzzle::operator=(Puzzle& p){
 	options
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 void genOptions(size_t row, size_t col){
-	vector<int>* options{9, 1, 2, 3, 4, 5, 6, 7, 8}; 
+	vector<int>* options = new vector<int>; 
 	int val = 0;
 
 	if(puzzle->at(r).at(c) != 0)

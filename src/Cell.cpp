@@ -24,3 +24,13 @@ Cell& Cell::operator=(Cell& c){
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	cell utility
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+void printOptions(){
+	size_t i;
+
+	printf("r:%u c:%u { ", row, col);
+	for(i = 0; i < options.size(); i++){
+		printf("%d, ", options.at(i) );
+	}
+	printf(" }\n");
+
+}
