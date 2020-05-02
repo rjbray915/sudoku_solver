@@ -61,7 +61,7 @@ void genOptions(size_t row, size_t col){
 
 	if(puzzle->at(r).at(c) != 0)
 	{   
-		return {0,0,0,0,0,0,0,0,0};
+		return options;
 	}   
 
 	//row

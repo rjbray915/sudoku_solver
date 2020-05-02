@@ -24,7 +24,7 @@ Cell& Cell::operator=(Cell& c){
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	cell utility
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-void printOptions(){
+void Cell::printOptions(){
 	size_t i;
 
 	printf("r:%u c:%u { ", row, col);
@@ -33,4 +33,26 @@ void printOptions(){
 	}
 	printf(" }\n");
 
+}
+
+bool Cell::searchOption(int num, int left, int right){
+	int middle = (left + right) / 2;
+
+	if( options.at(middle) == num ){
+		return true;
+	}
+	else if(left == right){
+		return false;
+	}
+	else if(left > right){
+		return false;
+	}
+	else{
+		if( num > options.at(middle) ){
+			return searchOption(num, middle+1, right);
+		}
+		else{
+			return searchOption(num, left, middle-1);
+		}
+	}
 }
