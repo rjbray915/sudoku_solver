@@ -11,9 +11,16 @@ class Cell{
 		//cell utility
 		void printOptions();
 		bool searchOption(int num, int left, int right);
+
+		//getters
+		int getNum();
+		bool isEmpty();
+
+		//setters
+		void setOptions(vector<int>* options);
 	protected:
 		int num;
 		size_t row, col;
 		vector<int>* options;
-		bool filled;
+		bool empty;
 };

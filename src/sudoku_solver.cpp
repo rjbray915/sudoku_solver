@@ -25,7 +25,7 @@ void assessBlock(int row, int col, vector<vector<int> > *puzzle);
 
 bool pairEliminateRow(int rowCheck, int colCheck, vector<vector<int> > *puzzle, vector<vector<vector<int> > > *possibilities, bool &modified);
 
-int main()
+int main(int argc, char** argv)
 {
 
 	/*******************************************8
@@ -37,11 +37,14 @@ int main()
 	Puzzle* puzz;
 
 	try{
-		puzz = new Puzzle( (string)("textPuzzles/test1.txt") );
+		puzz = new Puzzle( (string)(argv[1]) );
 	} catch(string s){
 		printf("%s\n", s.c_str() );
 		return -1;
 	}
+
+	puzz->genOptions(0, 8);
+	puzz->printOptions();
 
 	//return for now
 	printf("it worked!\n");

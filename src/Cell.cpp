@@ -7,16 +7,16 @@ Cell::Cell(int num, size_t row, size_t col){
 	this->options = NULL;
 
 	if(num != 0){
-		filled = true;
+		empty = false;;
 	}
 }
 
 Cell& Cell::operator=(Cell& c){
-	num = c.num;
+	num = c.getNum();
 	row = c.row;
 	col = c.col;
 	options = c.options;
-	filled = c.filled;
+	empty = c.isEmpty();
 
 	return *this;
 }
@@ -28,8 +28,8 @@ void Cell::printOptions(){
 	size_t i;
 
 	printf("r:%u c:%u { ", row, col);
-	for(i = 0; i < options.size(); i++){
-		printf("%d, ", options.at(i) );
+	for(i = 0; i < options->size(); i++){
+		printf("%d, ", options->at(i) );
 	}
 	printf(" }\n");
 
@@ -38,7 +38,7 @@ void Cell::printOptions(){
 bool Cell::searchOption(int num, int left, int right){
 	int middle = (left + right) / 2;
 
-	if( options.at(middle) == num ){
+	if( options->at(middle) == num ){
 		return true;
 	}
 	else if(left == right){
@@ -48,11 +48,29 @@ bool Cell::searchOption(int num, int left, int right){
 		return false;
 	}
 	else{
-		if( num > options.at(middle) ){
+		if( num > options->at(middle) ){
 			return searchOption(num, middle+1, right);
 		}
 		else{
 			return searchOption(num, left, middle-1);
 		}
 	}
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	getters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+int Cell::getNum(){
+	return num;
+}
+
+bool Cell::isEmpty(){
+	return empty;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	setters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+void Cell::setOptions(vector<int>* options){
+	this->options = options;
 }

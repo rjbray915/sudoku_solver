@@ -24,7 +24,7 @@ Puzzle::Puzzle(string readFile){
 
 	while(iFS >> num){
 		//c/9 gives row b/c groupings of 9, c%9 gives displacement
-		if(num < 1 || num > 9){
+		if(num < 0 || num > 9){
 			throw ( (string)"bad read file\n" );
 		}
 
@@ -55,58 +55,74 @@ Puzzle& Puzzle::operator=(Puzzle& p){
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	options
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-void genOptions(size_t row, size_t col){
+void Puzzle::genOptions(size_t row, size_t col){
 	vector<int>* options = new vector<int>; 
 	int val = 0;
+	size_t i;
 
-	if(puzzle->at(r).at(c) != 0)
+	if(puzzle.at(row).at(col)->getNum() != 0)
 	{   
-		return options;
-	}   
+		puzzle.at(row).at(col)->setOptions(options);
+	}
+
+	options->resize(9);
+	for(i = 1; i <= 9; i++){
+		options->at(i % options->size() ) = i;
+	}
 
 	//row
-	for(size_t col = 0; col < puzzle->at(0).size(); col++){
+	for(size_t c = 0; col < puzzle.at(0).size(); col++){
 		//get value
-		val = puzzle->at(r).at(col);
+		val = puzzle.at(row).at(c)->getNum();
 
 		//check if number
 		if(val != 0){ 
-			options.at(val % options.size()) = 0;
+			options->at(val % options->size()) = 0;
 		}   
 	}   
 
 	//col
-	for(size_t row = 0; row < puzzle->size(); row++){
+	for(size_t r = 0; r < puzzle.size(); r++){
 		//get value
-		val = puzzle->at(row).at(c);
+		val = puzzle.at(r).at(col)->getNum();
 
 		//check if number
 		if(val != 0){ 
-			options.at(val % options.size()) = 0;
+			options->at(val % options->size()) = 0;
 		}   
 
 	}   
 
 	//block
 	size_t rowStart, colStart;
-	rowStart = r/3 * 3;
-	colStart = c/3 * 3;
+	rowStart = row/3 * 3;
+	colStart = col/3 * 3;
 
-	for(size_t row = rowStart; row < rowStart+3; row++){
-		for(size_t col = colStart; col < colStart+3; col++){
+	for(size_t r = rowStart; r < rowStart+3; r++){
+		for(size_t c = colStart; c < colStart+3; c++){
 			//get value
-			val = puzzle->at(row).at(col);
+			val = puzzle.at(r).at(c)->getNum();
 
 			//check if number
 			if(val != 0){ 
-				options.at(val % options.size()) = 0;
+				options->at(val % options->size()) = 0;
 			}
 		}   
 
 	}   
 
-
-
-	return options;
+	puzzle.at(row).at(col)->setOptions(options);
 
 }
+
+void Puzzle::printOptions(){
+	for(size_t i = 0; i < puzzle.size(); i++){
+		for(size_t j = 0; j < puzzle.at(i).size(); j++){
+			puzzle.at(i).at(j)->printOptions();
+		}
+	}
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	setters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

@@ -11,6 +11,9 @@ class Puzzle{
 
 		//options
 		void genOptions(size_t row, size_t col);
+		void printOptions();
+
+		//setters
 
 	protected:
   	vector<vector<Cell*> > puzzle;
