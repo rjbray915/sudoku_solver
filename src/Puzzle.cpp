@@ -11,6 +11,10 @@ using namespace std;
 
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	constructors n' shiz
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
 Puzzle::Puzzle(string readFile){
 	int num;
 	int count = 0;
@@ -28,7 +32,7 @@ Puzzle::Puzzle(string readFile){
 			throw ( (string)"bad read file\n" );
 		}
 
-		puzzle.at(count%9).push_back( new Cell(num, count/9, count%9) );
+		puzzle.at(count/9).push_back( new Cell(num, count/9, count%9) );
 		count++;
 	}
 
@@ -54,7 +58,7 @@ Puzzle& Puzzle::operator=(Puzzle& p){
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	options
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 void Puzzle::genOptions(size_t row, size_t col){
 	vector<int>* options = new vector<int>; 
 	int val = 0;
@@ -71,13 +75,13 @@ void Puzzle::genOptions(size_t row, size_t col){
 	}
 
 	//row
-	for(size_t c = 0; col < puzzle.at(0).size(); col++){
+	for(size_t c = 0; c < puzzle.at(0).size(); c++){
 		//get value
 		val = puzzle.at(row).at(c)->getNum();
 
 		//check if number
 		if(val != 0){ 
-			options->at(val % options->size()) = 0;
+			options->at(val % options->size()  ) = 0;
 		}   
 	}   
 
@@ -113,6 +117,21 @@ void Puzzle::genOptions(size_t row, size_t col){
 
 	puzzle.at(row).at(col)->setOptions(options);
 
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	printing
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+void Puzzle::printPuzzle(){
+	size_t i, j;
+
+	for(i = 0; i < puzzle.size(); i++){
+		for(j = 0; j < puzzle.at(i).size(); j++){
+			printf("%d ", puzzle.at(i).at(j)->getNum() );
+		}
+
+		printf("\n");
+	}
 }
 
 void Puzzle::printOptions(){

@@ -11,6 +11,9 @@ class Puzzle{
 
 		//options
 		void genOptions(size_t row, size_t col);
+		
+		//printing
+		void printPuzzle();
 		void printOptions();
 
 		//setters

@@ -26,34 +26,24 @@ Cell& Cell::operator=(Cell& c){
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 void Cell::printOptions(){
 	size_t i;
-
+/*
+	printf("size:%d\n", options->size() );
 	printf("r:%u c:%u { ", row, col);
 	for(i = 0; i < options->size(); i++){
 		printf("%d, ", options->at(i) );
 	}
 	printf(" }\n");
-
+*/
 }
 
-bool Cell::searchOption(int num, int left, int right){
-	int middle = (left + right) / 2;
+int Cell::searchOption(int num){
+	int place = num % options->size();
 
-	if( options->at(middle) == num ){
-		return true;
-	}
-	else if(left == right){
-		return false;
-	}
-	else if(left > right){
-		return false;
+	if(options->at(place) == num){
+		return place; 
 	}
 	else{
-		if( num > options->at(middle) ){
-			return searchOption(num, middle+1, right);
-		}
-		else{
-			return searchOption(num, left, middle-1);
-		}
+		return -1;
 	}
 }
 

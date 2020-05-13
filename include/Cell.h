@@ -10,7 +10,7 @@ class Cell{
 		
 		//cell utility
 		void printOptions();
-		bool searchOption(int num, int left, int right);
+		int searchOption(int num);
 
 		//getters
 		int getNum();

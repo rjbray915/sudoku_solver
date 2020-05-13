@@ -43,6 +43,7 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
+	puzz->printPuzzle();
 	puzz->genOptions(0, 8);
 	puzz->printOptions();
 
